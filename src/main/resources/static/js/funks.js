@@ -291,7 +291,7 @@ function pintarRespuestaMessage(items){
        myTable+="<td>"+items[i].partyroom.owner+"</td>";
        myTable+="<td>"+items[i].partyroom.capacity+"</td>";
        myTable+="<td>"+items[i].partyroom.description+"</td>";
-       myTable+="<td>"+items[i].partyroom.category+"</td>";
+       myTable+="<td>"+items[i].partyroom.category.id+"</td>";
        myTable+="<td>"+items[i].partyroom.category.name+"</td>";
        myTable+="<td>"+items[i].partyroom.category.description+"</td>";
        myTable+="<td>"+items[i].client.idClient+"</td>";
@@ -377,10 +377,10 @@ function pintarRespuestaReservation(items){
        myTable+="<td>"+items[i].partyroom.owner+"</td>";
        myTable+="<td>"+items[i].partyroom.capacity+"</td>";
        myTable+="<td>"+items[i].partyroom.description+"</td>";
-       myTable+="<td>"+items[i].partyroom.category+"</td>";
+       myTable+="<td>"+items[i].partyroom.category.id+"</td>";
        myTable+="<td>"+items[i].partyroom.category.name+"</td>";
        myTable+="<td>"+items[i].partyroom.category.description+"</td>";
-       myTable+="<td>"+items[i].partyroom.messages+"</td>";
+       myTable+="<td>"+items[i].partyroom.messages.idMessage+"</td>";
        myTable+="<td>"+items[i].partyroom.messages.messageText+"</td>";
        myTable+="<td>"+items[i].client.idClient+"</td>";
        myTable+="<td>"+items[i].client.email+"</td>";
