@@ -25,7 +25,7 @@ public class Category {
 
     @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "category")
     @JsonIgnoreProperties("category") //evitar recursion infinita
-    private List<Partyroom> pr;
+    private List<Partyroom> partyrooms;
 
     
     public Integer getId() {
@@ -48,11 +48,11 @@ public class Category {
     }
 
     public List<Partyroom> getPartyroom(){
-        return pr;
+        return partyrooms;
     }
 
-    public void setPartyroom (List<Partyroom> proom){
-        this.pr = proom;
+    public void setPartyroom (List<Partyroom> partyrooms){
+        this.partyrooms = partyrooms;
     }
 
     
