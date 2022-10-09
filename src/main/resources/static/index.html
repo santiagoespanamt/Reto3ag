@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partyroom</title>
+</head>
+<body>
+    <h1>Reto 3 Partyroom</h1>
+
+    <div>
+        <h1>Categories</h1>
+        <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
+        <input type="text" id="categoryName" placeholder="category name">
+        <input type="text" id="categoryDescription" placeholder="category description">
+        <button onclick="bringCategory()"> Search</button>
+        <button onclick="saveCategory()"> Save</button>
+       
+    </div>    
+
+    <div>
+        <h1>Party rooms</h1>
+        <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
+        <input type="text" id="partyroomOwner" placeholder="Partyroom Owner ">
+        <input type="text" id="partyroomCapacity" placeholder="Partyroom capacity ">
+        <input type="number" id="idCategory" placeholder="Category Id ">
+        <input type="text" id="partyroomName" placeholder="Partyroom Name ">
+        <input type="text" id="partyroomDesc" placeholder="Partyroom Description ">
+
+        <button onclick="bringPartyroom()"> Consultar</button>
+        <button onclick="savePartyroom()"> Insertar</button>
+       
+    </div>    
+
+    <div>
+        <h1>Client</h1>
+        <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
+        <input type="text" id="clientName" placeholder="Client Name ">
+        <input type="text" id="clientEmail" placeholder="Client email ">
+        <input type="text" id="clientPassword" placeholder="Client Password">
+        <input type="number" id="clientAge" placeholder= "Client Age">
+        
+        <button onclick="bringClient()"> Consultar</button>
+        <button onclick="saveClient()"> Insertar</button>
+    </div>    
+
+    <div>
+        <h1>Messages</h1>
+        <!-- <input type="text" id="idPapeleria" placeholder="codigo articulo"> -->
+        <input type="text" id="messageText" placeholder="Message Text">
+        <input type="number" id="idClientM" placeholder="Client Id">
+        <input type="number" id="idPartyroomM" placeholder="Partyroom Id">
+        <button onclick="bringMessage()"> Consultar</button>
+        <button onclick="saveMessage()"> Insertar</button>
+        
+    </div>
+
+    
+    <div>
+        <h1>Reservation</h1>
+        <!-- <input type="text" id="idPapeleria" placeholder="codigo articulo"> -->
+        <input type="date" id="startDate" placeholder="Start Date">
+        <input type="date" id="devolutionDate" placeholder="Devolution Date">
+        <input type="number" id="idClientR" placeholder="Id Client">
+        <input type="number" id="idPartyroomR" placeholder="Id Partyroom">
+        
+        <button onclick="bringReserv()"> Consultar</button>
+        <button onclick="saveReserv()"> Insertar</button>
+        
+    </div>
+    
+    <div id="result">
+
+    </div>
+</body>
+<script type="text/javascript" src="js/funciones.js"></script>
+</html>
