@@ -46,7 +46,7 @@ public class PartyroomController {
     }
 
     @PutMapping("/update")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
     public Partyroom update(@RequestBody Partyroom pr) {
         return partyroomService.update(pr);
     }
