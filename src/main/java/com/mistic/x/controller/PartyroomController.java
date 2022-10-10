@@ -52,7 +52,7 @@ public class PartyroomController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public boolean delete(@PathVariable("id") int IdPartyroom) {
         return partyroomService.delete(IdPartyroom);
     }
