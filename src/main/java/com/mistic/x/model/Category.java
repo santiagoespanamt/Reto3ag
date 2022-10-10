@@ -20,12 +20,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String description;
+    private String description; 
 
 
     @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "category")
     @JsonIgnoreProperties("category") //evitar recursion infinita
-    private List<Partyroom> partyrooms;
+    private List<Partyroom> partyrooms; //cambiar porque da el parametro en el json de salida
 
     
     public Integer getId() {
