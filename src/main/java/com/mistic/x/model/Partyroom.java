@@ -29,7 +29,7 @@ public class Partyroom {
 
     @ManyToOne
     @JoinColumn(name = "categoryId")
-    @JsonIgnoreProperties("partyroom")
+    @JsonIgnoreProperties("partyrooms")
     private Category category;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "partyroom")
