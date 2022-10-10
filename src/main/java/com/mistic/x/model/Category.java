@@ -47,11 +47,11 @@ public class Category {
         this.description = description;
     }
 
-    public List<Partyroom> getPartyroom(){
+    public List<Partyroom> getPartyrooms(){
         return partyrooms;
     }
 
-    public void setPartyroom (List<Partyroom> partyrooms){
+    public void setPartyrooms (List<Partyroom> partyrooms){
         this.partyrooms = partyrooms;
     }
 
