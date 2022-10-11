@@ -27,6 +27,9 @@ function saveCategory(){
                             },
             error       :   function(xhr,status){
                                 alert('Operacion no satisfactoria,'+ xhr.status );
+                            },
+            complete    :   function(){
+                                readClient();
                             }
 
         }
