@@ -1,5 +1,10 @@
 
 
+$(document).ready(function(){
+    bringPartyroom();
+    });
+
+
 function saveCategory(){
 
     $("#resultado").empty();
@@ -36,7 +41,7 @@ function bringCategory(){
                 type:"GET",
                 datatype:"JSON",
                 success:function(respuesta){                
-                    pintarRespuestaCategoria(respuesta);
+                    paintCategoryCards(respuesta);
                     
                 },
                 error       :   function(xhr,status){
@@ -49,6 +54,25 @@ function bringCategory(){
           );
 }
 
+
+function paintCategoryCards(items){
+
+    let myTable="";
+    for (i=0; i<items.length; i++){
+        myTable=`
+        <div class= "card" style="width: 18rem;">
+            <div class= "card body">
+                <h5 class= "card-title">${items[i].id}</h5>
+                <h6 class= "card-subtitle mb-2 text-muted">${items[i].name}</h6>
+                <p class= "card-text">${items[i].description}</p>
+                <a href="#" class= "card-link>Card Link</a>
+                </div>
+            </div> 
+        `
+    }
+    myTable+= "</div></div>";
+    $("#result").append(myTable);
+}
 
 function pintarRespuestaCategoria(items){
 
