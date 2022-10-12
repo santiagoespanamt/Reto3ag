@@ -29,7 +29,7 @@ function saveCategory(){
                                 alert('Operacion no satisfactoria,'+ xhr.status );
                             },
             complete    :   function(){
-                                readClient();
+                                bringCategory();
                             }
 
         }
@@ -69,6 +69,8 @@ function paintCategoryCards(items){
                 <h6 class= "card-subtitle mb-2 text-muted">${items[i].name}</h6>
                 <p class= "card-text">${items[i].description}</p>
                 <a href="#" class= "card-link>Card Link</a>
+                
+                
                 </div>
             </div> 
         `
@@ -76,7 +78,9 @@ function paintCategoryCards(items){
     myTable+= "</div></div>";
     $("#result").append(myTable);
 }
+//<a href="#" class="btn btn-primary"onclick= 'deleteCategory(" + items[i].id + ")'>Go somewhere</a>
 
+//depre u.u
 function pintarRespuestaCategoria(items){
 
      $("#result").empty();
@@ -106,7 +110,7 @@ function bringPartyroom(){
                 type:"GET",
                 datatype:"JSON",
                 success:function(respuesta){
-                    pintarRespuestaPartyroom(respuesta);                    
+                    paintPartyroomCard(respuesta);                    
                 },
                 error       :   function(xhr,status){
                     alert('Operacion no satisfactoria,'+ xhr.status );
@@ -116,33 +120,6 @@ function bringPartyroom(){
               }
                
           );
-}
-
-
-function pintarRespuestaPartyroom(items){
-
-     $("#result").empty();
-
-    //declarar variables js
-    let myTable="<table>";
-    myTable += "<tr><th>Id</th><th>name</th> <th> Owner</th><th>Capacity</th><th>description</th><th>Category Id</th><th>Category Name</th><th>Category Description</th> <th>Messages</th><th>Reservation</th></tr>";
-    for(i=0;i<items.length;i++){
-        myTable+="<tr>";
-        myTable+="<td>"+items[i].id+"</td>";
-        myTable+="<td>"+items[i].name+"</td>";
-        myTable+="<td>"+items[i].owner+"</td>";
-        myTable+="<td>"+items[i].capacity+"</td>";
-        myTable+="<td>"+items[i].description+"</td>";                
-        myTable+="<td>"+items[i].category.id +"</td>";                
-        myTable+="<td>"+items[i].category.name +"</td>";                
-        myTable+="<td>"+items[i].category.description +"</td>";                
-        myTable+="<td>"+items[i].messages +"</td>";                        
-        myTable+="<td>"+items[i].reservations+"</td>";                
-        // myTable+="<td><button onclick='borrarElemento("+items[i].id+")'>Borrar</button>";
-        myTable+="</tr>";
-    }
-    myTable +="</table>";
-    $("#result").append(myTable);
 }
 
 
@@ -175,6 +152,94 @@ function savePartyroom(){
 
         }
     );
+}
+
+function paintPartyroomCard(items){
+
+    let myTable="";
+    for (i=0; i<items.length; i++){
+        myTable=`
+        <div class= "card" style="width: 18rem;">
+            <div class= "card body">
+                <h4 class= "card-title">${items[i].id}</h4>
+                <h6 class= "card-subtitle mb-2 text">${items[i].name}</h6>
+                <h5 class= "card-subtitle mb-2 text-muted">${items[i].owner}</h5>
+                <h5 class= "card-subtitle mb-2 text-muted">${items[i].capacity}</h5>
+                <p class= "card-text">${items[i].description}</p>
+                <h6 class= "card-subtitle mb-2 text">${items[i].category}</h6>
+                <h5 class= "card-subtitle mb-2 text-muted">${items[i].category.name}</h5>
+                <h5 class= "card-subtitle mb-2 text-muted">${items[i].category.description}</h5>
+                <h5 class= "card-subtitle mb-2 text">${items[i].messages}</h5>
+                <h5 class= "card-subtitle mb-2 text">${items[i].reservations}</h5>
+                <a href="#" class= "card-link>Card Link</a>
+                <a href="#" class="btn btn-primary"onclick= 'deletePartyroom(" + items[i].id + ")'>Delete Partyroom</a>
+                </div>
+            </div> 
+        `
+    }
+    myTable+= "</div></div>";
+    $("#result").append(myTable);
+
+
+}
+
+function deletePartyroom(idPartyroom) {
+
+    let data={
+        id:idPartyroom,
+    };
+
+    
+    let dataToSend= JSON.stringify(data);
+    console.log(dataToSend);
+
+    $.ajax({
+        url : 'http://129.80.206.229/api/Partyroom/{id}',
+        
+        type        :   'DELETE',
+        data        :   dataToSend,
+        contentType :   'application/json',
+
+        success     :   function(pepe) {
+                        alert("Successfully deleted");
+                        },
+        /*error : function(xhr, status) {
+        alert('ha sucedido un problema');
+        },*/
+
+        complete    :   function(){
+                        bringPartyroom();
+                        }
+        
+        });
+
+}
+
+//deprec u.u
+function pintarRespuestaPartyroom(items){
+
+    $("#result").empty();
+
+   //declarar variables js
+   let myTable="<table>";
+   myTable += "<tr><th>Id</th><th>name</th> <th> Owner</th><th>Capacity</th><th>description</th><th>Category Id</th><th>Category Name</th><th>Category Description</th> <th>Messages</th><th>Reservation</th></tr>";
+   for(i=0;i<items.length;i++){
+       myTable+="<tr>";
+       myTable+="<td>"+items[i].id+"</td>";
+       myTable+="<td>"+items[i].name+"</td>";
+       myTable+="<td>"+items[i].owner+"</td>";
+       myTable+="<td>"+items[i].capacity+"</td>";
+       myTable+="<td>"+items[i].description+"</td>";                
+       myTable+="<td>"+items[i].category.id +"</td>";                
+       myTable+="<td>"+items[i].category.name +"</td>";                
+       myTable+="<td>"+items[i].category.description +"</td>";                
+       myTable+="<td>"+items[i].messages +"</td>";                        
+       myTable+="<td>"+items[i].reservations+"</td>";                
+       // myTable+="<td><button onclick='borrarElemento("+items[i].id+")'>Borrar</button>";
+       myTable+="</tr>";
+   }
+   myTable +="</table>";
+   $("#result").append(myTable);
 }
 
 
@@ -216,7 +281,7 @@ function bringClient(){
                 type:"GET",
                 datatype:"JSON",
                 success:function(respuesta){
-                    pintarRespuestaClient(respuesta);                    
+                    paintClientCards(respuesta);                    
                 },
                 error       :   function(xhr,status){
                     alert('Operacion no satisfactoria,'+ xhr.status );
@@ -226,6 +291,63 @@ function bringClient(){
               }
                
           );
+}
+
+function deleteClient(idClientDel) {
+
+    let data={
+        id:idClientDel,
+    };
+
+    
+    let dataToSend= JSON.stringify(data);
+    console.log(dataToSend);
+
+    $.ajax({
+        url : 'http://129.80.206.229/api/Client/{id}',
+        
+        type        :   'DELETE',
+        data        :   dataToSend,
+        contentType :   'application/json',
+
+        success     :   function(pepe) {
+                        alert("Successfully deleted");
+                        },
+        /*error : function(xhr, status) {
+        alert('ha sucedido un problema');
+        },*/
+
+        complete    :   function(){
+                        bringClient();
+                        }
+        
+        });
+
+}
+
+function paintClientCards(items){
+
+    let myTable="";
+    for (i=0; i<items.length; i++){
+        myTable=`
+        <div class= "card" style="width: 18rem;">
+            <div class= "card body">
+                <h4 class= "card-title">${items[i].idClient}</h4>
+                <h5 class= "card-subtitle mb-2 text-muted">${items[i].email}</h5>
+                <h5 class= "card-text">${items[i].password}</h5>
+                <h5 class= "card-text">${items[i].name}</h5>
+                <h5 class= "card-text">${items[i].age}</h5>
+                <p class= "card-text">${items[i].messages}</p>
+                <p class= "card-text">${items[i].reservations}</p>
+                <a href="#" class="btn btn-primary"onclick= 'deleteClient(" + items[i].idClient + ")'>Delete Client</a>
+                
+                
+                </div>
+            </div> 
+        `
+    }
+    myTable+= "</div></div>";
+    $("#result").append(myTable);
 }
 
 
