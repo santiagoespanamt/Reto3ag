@@ -156,7 +156,7 @@ function savePartyroom(){
 
 function paintPartyroomCard(items){
 
-    let myTable="";
+    let myTable= '<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
         myTable=`
         <div class= "card" style="width: 18rem;">
@@ -172,7 +172,7 @@ function paintPartyroomCard(items){
                 <h5 class= "card-subtitle mb-2 text">${items[i].messages}</h5>
                 <h5 class= "card-subtitle mb-2 text">${items[i].reservations}</h5>
                 <a href="#" class= "card-link>Card Link</a>
-                <a href="#" class="btn btn-primary"onclick= 'deletePartyroom(" + items[i].id + ")'>Delete Partyroom</a>
+                <button class="btn btn-danger" onclick= "deletePartyroom(${items[i].id})">Delete Partyroom</button>
                 </div>
             </div> 
         `
@@ -194,7 +194,7 @@ function deletePartyroom(idPartyroom) {
     console.log(dataToSend);
 
     $.ajax({
-        url : 'http://129.80.206.229/api/Partyroom/{id}',
+        url : 'http://129.80.206.229/api/Partyroom/all',
         
         type        :   'DELETE',
         data        :   dataToSend,
@@ -216,6 +216,7 @@ function deletePartyroom(idPartyroom) {
 }
 
 //deprec u.u
+/*
 function pintarRespuestaPartyroom(items){
 
     $("#result").empty();
@@ -241,7 +242,7 @@ function pintarRespuestaPartyroom(items){
    myTable +="</table>";
    $("#result").append(myTable);
 }
-
+*/
 
 
 function saveClient(){
@@ -301,10 +302,9 @@ function deleteClient(idClientDel) {
 
     
     let dataToSend= JSON.stringify(data);
-    console.log(dataToSend);
 
     $.ajax({
-        url : 'http://129.80.206.229/api/Client/{id}',
+        url : 'http://129.80.206.229/api/Client/ + idClientDel',
         
         type        :   'DELETE',
         data        :   dataToSend,
@@ -327,7 +327,7 @@ function deleteClient(idClientDel) {
 
 function paintClientCards(items){
 
-    let myTable="";
+    let myTable='<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
         myTable=`
         <div class= "card" style="width: 18rem;">
@@ -339,7 +339,7 @@ function paintClientCards(items){
                 <h5 class= "card-text">${items[i].age}</h5>
                 <p class= "card-text">${items[i].messages}</p>
                 <p class= "card-text">${items[i].reservations}</p>
-                <a href="#" class="btn btn-primary"onclick= 'deleteClient(" + items[i].idClient + ")'>Delete Client</a>
+                <button class="btn btn-danger" onclick= "deleteClient(${items[i].idClient})">Delete Client</button>
                 
                 
                 </div>
@@ -350,7 +350,7 @@ function paintClientCards(items){
     $("#result").append(myTable);
 }
 
-
+/*
 function pintarRespuestaClient(items){
 
     $("#result").empty();
@@ -373,7 +373,7 @@ function pintarRespuestaClient(items){
    myTable +="</table>";
    $("#result").append(myTable);
 }
-
+*/
 
 function saveMessage(){
 

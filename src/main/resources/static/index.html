@@ -22,17 +22,16 @@
     <h1>Reto 3 Partyroom</h1>
 
     <div>
-        <h1>Categories</h1>
+        <h1>Categories</h1> <button onclick="bringCategory()"> Search</button>
         <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
         <input type="text" id="categoryName" placeholder="category name">
         <input type="text" id="categoryDescription" placeholder="category description">
-        <button onclick="bringCategory()"> Search</button>
         <button onclick="saveCategory()"> Save</button>
        
     </div>    
 
     <div>
-        <h1>Party rooms</h1>
+        <h1>Party rooms</h1> <button onclick="bringPartyroom()"> Consultar</button>
         <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
         <input type="text" id="partyroomOwner" placeholder="Partyroom Owner ">
         <input type="text" id="partyroomCapacity" placeholder="Partyroom capacity ">
@@ -40,7 +39,7 @@
         <input type="text" id="partyroomName" placeholder="Partyroom Name ">
         <input type="text" id="partyroomDesc" placeholder="Partyroom Description ">
 
-        <button onclick="bringPartyroom()"> Consultar</button>
+        
         <button onclick="savePartyroom()"> Insertar</button>
        
     </div>    
@@ -70,14 +69,14 @@
 
     
     <div>
-        <h1>Reservation</h1>
+        <h1>Reservation</h1> <button onclick="bringReserv()"> Consultar</button>
         <!-- <input type="text" id="idPapeleria" placeholder="codigo articulo"> -->
         <input type="date" id="startDate" placeholder="Start Date">
         <input type="date" id="devolutionDate" placeholder="Devolution Date">
         <input type="number" id="idClientR" placeholder="Id Client">
         <input type="number" id="idPartyroomR" placeholder="Id Partyroom">
         
-        <button onclick="bringReserv()"> Consultar</button>
+        
         <button onclick="saveReserv()"> Insertar</button>
         
     </div>
