@@ -3,6 +3,8 @@ package com.mistic.x.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mistic.x.model.Reservation;
+import com.mistic.x.model.DTOs.CountClient;
+import com.mistic.x.model.DTOs.CountStatus;
 import com.mistic.x.service.ReservationService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,9 +57,27 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") int idReservation) {
         return reservationService.delete(idReservation);
+    }
+
+    //Reto 5
+    @GetMapping("/report-clients")
+    public List<CountClient> getReportTopClients(){
+        return reservationService.getTopClients();
+    }
+
+    
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+    public List<Reservation> getReportReservationsDates(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo){
+        return reservationService.getReservationsPeriod(dateOne, dateTwo);
+    }
+    
+
+    @GetMapping("/report-status")
+    public CountStatus getReportReservationsStatus(){
+        return reservationService.getReservationsStatus();
     }
     
 }

@@ -1,5 +1,6 @@
 package com.mistic.x.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table (name="category")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

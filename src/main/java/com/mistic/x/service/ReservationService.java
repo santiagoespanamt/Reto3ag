@@ -1,12 +1,19 @@
 package com.mistic.x.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mistic.x.model.Reservation;
+import com.mistic.x.model.DTOs.CountClient;
+import com.mistic.x.model.DTOs.CountStatus;
 import com.mistic.x.repository.ReservationRepository;
 
 @Service
@@ -66,6 +73,39 @@ public class ReservationService {
         }
 
         return flag;
-    }    
+    }
+    
+    //Reto 5
+
+    public List<CountClient> getTopClients(){
+        return reservationRepository.getTopClients();
+    }
+    
+
+    public List<Reservation> getReservationsPeriod(String dateA, String dateB){
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd"); // 2022-01-21
+        Date a = new Date();
+        Date b = new Date();
+        try{
+            a = parser.parse(dateA);
+            b = parser.parse(dateB);
+        }catch(ParseException exception){
+                exception.printStackTrace();
+        }
+        if(a.before(b)){
+            return reservationRepository.getReservationPeriod(a, b);
+        }else{
+            return new ArrayList<>();
+        }
+    }
+    
+
+    public CountStatus getReservationsStatus(){
+        List<Reservation> completed = reservationRepository.getReservationsByStatus("completed");
+
+        List<Reservation> cancelled = reservationRepository.getReservationsByStatus("cancelled");
+
+        return new CountStatus((long) completed.size(), (long) cancelled.size());
+    }
     
 }

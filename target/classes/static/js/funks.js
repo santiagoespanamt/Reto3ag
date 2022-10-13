@@ -60,17 +60,16 @@ function bringCategory(){
 
 function paintCategoryCards(items){
 
-    let myTable="";
+    $("#result").empty();
+    let myTable='<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
-        myTable=`
+        myTable+=`
         <div class= "card" style="width: 18rem;">
             <div class= "card body">
                 <h5 class= "card-title">${items[i].id}</h5>
                 <h6 class= "card-subtitle mb-2 text-muted">${items[i].name}</h6>
                 <p class= "card-text">${items[i].description}</p>
-                <a href="#" class= "card-link>Card Link</a>
-                
-                
+                <button class="btn btn-danger" onclick= "deletePartyroom(${items[i].id})">Delete Category</button>
                 </div>
             </div> 
         `
@@ -81,6 +80,7 @@ function paintCategoryCards(items){
 //<a href="#" class="btn btn-primary"onclick= 'deleteCategory(" + items[i].id + ")'>Go somewhere</a>
 
 //depre u.u
+/*
 function pintarRespuestaCategoria(items){
 
      $("#result").empty();
@@ -99,7 +99,7 @@ function pintarRespuestaCategoria(items){
     myTable +="</table>";
     $("#result").append(myTable);
 }
-
+*/
 
 
 
@@ -156,22 +156,22 @@ function savePartyroom(){
 
 function paintPartyroomCard(items){
 
+    $("#result").empty();
     let myTable= '<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
-        myTable=`
+        myTable+=`
         <div class= "card" style="width: 18rem;">
             <div class= "card body">
                 <h4 class= "card-title">${items[i].id}</h4>
-                <h6 class= "card-subtitle mb-2 text">${items[i].name}</h6>
-                <h5 class= "card-subtitle mb-2 text-muted">${items[i].owner}</h5>
-                <h5 class= "card-subtitle mb-2 text-muted">${items[i].capacity}</h5>
+                <h5 class= "card-subtitle mb-2 text">${items[i].name}</h5>
+                <h5 class= "card-subtitle mb-2 text-muted">Owned by: ${items[i].owner}</h5>
+                <h6 class= "card-subtitle mb-2 text-muted">Capacity: ${items[i].capacity}</h6>
                 <p class= "card-text">${items[i].description}</p>
-                <h6 class= "card-subtitle mb-2 text">${items[i].category}</h6>
+                <h6 class= "card-subtitle mb-2 text">Category ID: ${items[i].category.id}</h6>
                 <h5 class= "card-subtitle mb-2 text-muted">${items[i].category.name}</h5>
                 <h5 class= "card-subtitle mb-2 text-muted">${items[i].category.description}</h5>
                 <h5 class= "card-subtitle mb-2 text">${items[i].messages}</h5>
                 <h5 class= "card-subtitle mb-2 text">${items[i].reservations}</h5>
-                <a href="#" class= "card-link>Card Link</a>
                 <button class="btn btn-danger" onclick= "deletePartyroom(${items[i].id})">Delete Partyroom</button>
                 </div>
             </div> 
@@ -194,7 +194,7 @@ function deletePartyroom(idPartyroom) {
     console.log(dataToSend);
 
     $.ajax({
-        url : 'http://129.80.206.229/api/Partyroom/all',
+        url : 'http://129.80.206.229/api/Partyroom/{id}',
         
         type        :   'DELETE',
         data        :   dataToSend,
@@ -269,7 +269,10 @@ function saveClient(){
                             },
             error       :   function(xhr,status){
                                 alert('Operacion no satisfactoria,'+ xhr.status );
-                            }
+                            },
+            complete    :   function(whoo){
+                            bringClient();
+                            }                
 
         }
     );
@@ -304,7 +307,7 @@ function deleteClient(idClientDel) {
     let dataToSend= JSON.stringify(data);
 
     $.ajax({
-        url : 'http://129.80.206.229/api/Client/ + idClientDel',
+        url : 'http://129.80.206.229/api/Client/{dataToSend}',
         
         type        :   'DELETE',
         data        :   dataToSend,
@@ -327,9 +330,10 @@ function deleteClient(idClientDel) {
 
 function paintClientCards(items){
 
+    $("#result").empty();
     let myTable='<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
-        myTable=`
+        myTable+=`
         <div class= "card" style="width: 18rem;">
             <div class= "card body">
                 <h4 class= "card-title">${items[i].idClient}</h4>

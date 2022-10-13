@@ -1,5 +1,6 @@
 package com.mistic.x.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="reservation")
-public class Reservation {
+public class Reservation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

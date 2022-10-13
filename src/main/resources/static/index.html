@@ -22,16 +22,16 @@
     <h1>Reto 3 Partyroom</h1>
 
     <div>
-        <h1>Categories</h1> <button onclick="bringCategory()"> Search</button>
+        <h1>Categories <button class = "btn btn-primary" onclick="bringCategory()"> Search</button> </h1>
         <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
         <input type="text" id="categoryName" placeholder="category name">
         <input type="text" id="categoryDescription" placeholder="category description">
-        <button onclick="saveCategory()"> Save</button>
+        <button class ="btn btn-success" onclick="saveCategory()"> Save</button>
        
     </div>    
 
     <div>
-        <h1>Party rooms</h1> <button onclick="bringPartyroom()"> Consultar</button>
+        <h1>Party rooms <button class = "btn btn-primary" onclick="bringPartyroom()"> Search</button> </h1>
         <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
         <input type="text" id="partyroomOwner" placeholder="Partyroom Owner ">
         <input type="text" id="partyroomCapacity" placeholder="Partyroom capacity ">
@@ -40,36 +40,36 @@
         <input type="text" id="partyroomDesc" placeholder="Partyroom Description ">
 
         
-        <button onclick="savePartyroom()"> Insertar</button>
+        <button class ="btn btn-success" onclick="savePartyroom()"> Save</button>
        
     </div>    
 
     <div>
-        <h1>Client</h1>
+        <h1>Client <button class="btn btn-primary" onclick="bringClient()"> Search</button> </h1>
         <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
         <input type="text" id="clientName" placeholder="Client Name ">
         <input type="text" id="clientEmail" placeholder="Client email ">
         <input type="text" id="clientPassword" placeholder="Client Password">
         <input type="number" id="clientAge" placeholder= "Client Age">
         
-        <button onclick="bringClient()"> Consultar</button>
-        <button onclick="saveClient()"> Insertar</button>
+        
+        <button class ="btn btn-success" onclick="saveClient()"> Save</button>
     </div>    
 
     <div>
-        <h1>Messages</h1>
+        <h1>Messages <button class="btn btn-primary" onclick="bringMessage()"> Search</button> </h1>
         <!-- <input type="text" id="idPapeleria" placeholder="codigo articulo"> -->
         <input type="text" id="messageText" placeholder="Message Text">
         <input type="number" id="idClientM" placeholder="Client Id">
         <input type="number" id="idPartyroomM" placeholder="Partyroom Id">
-        <button onclick="bringMessage()"> Consultar</button>
-        <button onclick="saveMessage()"> Insertar</button>
+        
+        <button class ="btn btn-success" onclick="saveMessage()"> Save</button>
         
     </div>
 
     
     <div>
-        <h1>Reservation</h1> <button onclick="bringReserv()"> Consultar</button>
+        <h1>Reservation <button class="btn btn-primary" onclick="bringReserv()"> Search</button> </h1>
         <!-- <input type="text" id="idPapeleria" placeholder="codigo articulo"> -->
         <input type="date" id="startDate" placeholder="Start Date">
         <input type="date" id="devolutionDate" placeholder="Devolution Date">
@@ -77,7 +77,7 @@
         <input type="number" id="idPartyroomR" placeholder="Id Partyroom">
         
         
-        <button onclick="saveReserv()"> Insertar</button>
+        <button class ="btn btn-success" onclick="saveReserv()"> Save</button>
         
     </div>
     
