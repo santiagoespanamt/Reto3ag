@@ -10,16 +10,38 @@
         rel="stylesheet" integrity="sha384-
         KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
         crossorigin="anonymous">
+    <script type= "text/css" src = "css/style.css"></script>
     <script src="=https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundl
         e.min.js" integrity="sha384-
         U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/funks.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Partyroom</title>
 </head>
 <body>
-    <h1>Reto 3 Partyroom</h1>
+    <h1>Reto 5 Partyroom</h1>
+
+    <div class="container"
+    columns: 3
+    columns: 12em
+    column-gap: 1em;
+    column-rule-width: thin;
+    column-rule-style: solid;
+    column-rule-color: black;   
+    >
+
+    <div class="card" style="width: 18rem; padding: 8px;" id ="cardCategory">
+         <div class= "card body border-0">
+            <h1> Categories</h1>
+            <button class="btn btn-primary" onclick ="bringCategory()">Show Categories</button>
+            
+            <button class="btn btn-success" onclick="setCategorySaveCard()">New Category</button>
+
+         </div>
+    </div>
+    <button class="btn btn-danger" onclick="setCategorySaveCard()">Erase Cat Div</button>
 
     <div>
         <h1>Categories <button class = "btn btn-primary" onclick="bringCategory()"> Search</button> </h1>
@@ -80,14 +102,14 @@
         <button class ="btn btn-success" onclick="saveReserv()"> Save</button>
         
     </div>
-    
-    <div id="result">
-
-        
-        
-        <button class="btn btn-primary" onclick="bringPartyroom()">Back</button>
 
     </div>
+    
+    <div id="result">    
+        
+    </div>
+
+    <div><button class="btn btn-primary" onclick="bringPartyroom()">Back</button></div>
 </body>
-<script type="text/javascript" src="js/funks.js"></script>
+
 </html>

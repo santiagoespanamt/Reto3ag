@@ -61,21 +61,65 @@ function bringCategory(){
 function paintCategoryCards(items){
 
     $("#result").empty();
+    
     let myTable='<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
         myTable+=`
-        <div class= "card" style="width: 18rem;">
-            <div class= "card body">
-                <h5 class= "card-title">${items[i].id}</h5>
+        <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.6s;
+            cursor: pointer;
+          }
+        
+        .button3 {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #f44336;
+                }
+
+        .button3:hover {
+                        background-color: #f44336;
+                        color: white;
+                        }
+        </style>
+        
+        <div class= "card" style="width: 18rem; padding: 8px; border-width: 2px;">
+            <div class= "card body" style= "border-width:0px">
+                <h4 class= "card-title"><strong>Category ${items[i].id}</strong></h4>
                 <h6 class= "card-subtitle mb-2 text-muted">${items[i].name}</h6>
                 <p class= "card-text">${items[i].description}</p>
-                <button class="btn btn-danger" onclick= "deletePartyroom(${items[i].id})">Delete Category</button>
+                <button class="btn button3" onclick= "deletePartyroom(${items[i].id})">Delete Category</button>
                 </div>
             </div> 
         `
     }
     myTable+= "</div></div>";
     $("#result").append(myTable);
+}
+
+function setCategorySaveCard(){
+
+    $("#cardCategory").empty();
+
+    let formulario = `<div class="container">
+                        <div class="card" style="width: 14rem;">
+                            <input type="text" id="categoryName" placeholder="category name" margin-bottom: 2px;>
+                            <input type="text" id="categoryDescription" placeholder="category description" margin-top: 2px; margin-bottom: 2px;>
+                            <button class ="btn btn-success" onclick="saveCategory()"> Save</button>
+                        </div>
+                    </div>`;
+
+    $("#cardCategory").append(formulario);
+
 }
 //<a href="#" class="btn btn-primary"onclick= 'deleteCategory(" + items[i].id + ")'>Go somewhere</a>
 
@@ -148,7 +192,10 @@ function savePartyroom(){
                             },
             error       :   function(xhr,status){
                                 alert('Operacion no satisfactoria,'+ xhr.status );
-                            }
+                            },
+            completed   :   function(a){
+                                bringPartyroom();
+                            }    
 
         }
     );
@@ -160,9 +207,33 @@ function paintPartyroomCard(items){
     let myTable= '<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
         myTable+=`
-        <div class= "card" style="width: 18rem;">
-            <div class= "card body">
-                <h4 class= "card-title">${items[i].id}</h4>
+        <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.6s;
+            cursor: pointer;
+          }
+        .button3 {
+            background-color: white; 
+            color: black; 
+            border: 2px solid #f44336;
+            }
+        .button3:hover {
+                    background-color: #f44336;
+                    color: white;
+                    }
+        </style>
+        <div class= "card" style="width: 18rem; padding: 10px;">
+            <div class= "card body border-0">
+                <h4 class= "card-title">Partyroom ${items[i].id}</h4>
                 <h5 class= "card-subtitle mb-2 text">${items[i].name}</h5>
                 <h5 class= "card-subtitle mb-2 text-muted">Owned by: ${items[i].owner}</h5>
                 <h6 class= "card-subtitle mb-2 text-muted">Capacity: ${items[i].capacity}</h6>
@@ -172,16 +243,20 @@ function paintPartyroomCard(items){
                 <h5 class= "card-subtitle mb-2 text-muted">${items[i].category.description}</h5>
                 <h5 class= "card-subtitle mb-2 text">${items[i].messages}</h5>
                 <h5 class= "card-subtitle mb-2 text">${items[i].reservations}</h5>
-                <button class="btn btn-danger" onclick= "deletePartyroom(${items[i].id})">Delete Partyroom</button>
+                <button class="btn button3" onclick= "deletePartyroom(${items[i].id})">Delete Partyroom</button>
                 </div>
             </div> 
         `
     }
     myTable+= "</div></div>";
     $("#result").append(myTable);
-
-
 }
+
+function eraseCatDiv(){
+    $("#cardCategory").empty();
+}
+
+
 
 function deletePartyroom(idPartyroom) {
 
