@@ -10,7 +10,7 @@
         rel="stylesheet" integrity="sha384-
         KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
         crossorigin="anonymous">
-    <script type= "text/css" src = "css/style.css"></script>
+    <link rel="stylesheet" href="css/style.css"> 
     <script src="=https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundl
         e.min.js" integrity="sha384-
@@ -18,94 +18,31 @@
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/funks.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Partyroom</title>
+    <title>Partyroom Santiago España G16</title>
 </head>
 <body>
-    <h1>Reto 5 Partyroom</h1>
+    <div class="container bigContainer">
 
-    <div class="container"
-    columns: 3
-    columns: 12em
-    column-gap: 1em;
-    column-rule-width: thin;
-    column-rule-style: solid;
-    column-rule-color: black;   
-    >
+    <div class="container cont1">
 
-    <div class="card" style="width: 18rem; padding: 8px;" id ="cardCategory">
-         <div class= "card body border-0">
-            <h1> Categories</h1>
-            <button class="btn btn-primary" onclick ="bringCategory()">Show Categories</button>
-            
-            <button class="btn btn-success" onclick="setCategorySaveCard()">New Category</button>
+    <div class="card mainCard" id ="cardCategory"></div>
 
-         </div>
+    <div class="card mainCard" id ="cardPartyroom"></div>
+
+    <div class="card mainCard" id ="cardClient"></div>
+
+    <div class="card mainCard" id ="cardMessage"></div>
+
+    <div class="card mainCard" id ="cardReservation"></div>
+
     </div>
-    <button class="btn btn-danger" onclick="setCategorySaveCard()">Erase Cat Div</button>
-
-    <div>
-        <h1>Categories <button class = "btn btn-primary" onclick="bringCategory()"> Search</button> </h1>
-        <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
-        <input type="text" id="categoryName" placeholder="category name">
-        <input type="text" id="categoryDescription" placeholder="category description">
-        <button class ="btn btn-success" onclick="saveCategory()"> Save</button>
-       
-    </div>    
-
-    <div>
-        <h1>Party rooms <button class = "btn btn-primary" onclick="bringPartyroom()"> Search</button> </h1>
-        <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
-        <input type="text" id="partyroomOwner" placeholder="Partyroom Owner ">
-        <input type="text" id="partyroomCapacity" placeholder="Partyroom capacity ">
-        <input type="number" id="idCategory" placeholder="Category Id ">
-        <input type="text" id="partyroomName" placeholder="Partyroom Name ">
-        <input type="text" id="partyroomDesc" placeholder="Partyroom Description ">
-
-        
-        <button class ="btn btn-success" onclick="savePartyroom()"> Save</button>
-       
-    </div>    
-
-    <div>
-        <h1>Client <button class="btn btn-primary" onclick="bringClient()"> Search</button> </h1>
-        <!-- <input type="text" id="idCategoria" placeholder="codigo categoria"> -->
-        <input type="text" id="clientName" placeholder="Client Name ">
-        <input type="text" id="clientEmail" placeholder="Client email ">
-        <input type="text" id="clientPassword" placeholder="Client Password">
-        <input type="number" id="clientAge" placeholder= "Client Age">
-        
-        
-        <button class ="btn btn-success" onclick="saveClient()"> Save</button>
-    </div>    
-
-    <div>
-        <h1>Messages <button class="btn btn-primary" onclick="bringMessage()"> Search</button> </h1>
-        <!-- <input type="text" id="idPapeleria" placeholder="codigo articulo"> -->
-        <input type="text" id="messageText" placeholder="Message Text">
-        <input type="number" id="idClientM" placeholder="Client Id">
-        <input type="number" id="idPartyroomM" placeholder="Partyroom Id">
-        
-        <button class ="btn btn-success" onclick="saveMessage()"> Save</button>
-        
+    <div class="mainTitle">Reto 5 Partyroom
+        <div>Santiago España G16</div>
     </div>
-
-    
-    <div>
-        <h1>Reservation <button class="btn btn-primary" onclick="bringReserv()"> Search</button> </h1>
-        <!-- <input type="text" id="idPapeleria" placeholder="codigo articulo"> -->
-        <input type="date" id="startDate" placeholder="Start Date">
-        <input type="date" id="devolutionDate" placeholder="Devolution Date">
-        <input type="number" id="idClientR" placeholder="Id Client">
-        <input type="number" id="idPartyroomR" placeholder="Id Partyroom">
-        
-        
-        <button class ="btn btn-success" onclick="saveReserv()"> Save</button>
-        
-    </div>
-
     </div>
     
-    <div id="result">    
+    <div class= "container showCardsContainer">
+        <div class = "card-deck" id="result"></div>
         
     </div>
 

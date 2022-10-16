@@ -2,6 +2,11 @@
 
 $(document).ready(function(){
     bringPartyroom();
+    setCategoryShowCard();
+    setPartyroomShowCard();
+    setClientShowCard();
+    setMessageShowCard();
+    setReservShowCard()
     });
 
 
@@ -30,6 +35,7 @@ function saveCategory(){
                             },
             complete    :   function(){
                                 bringCategory();
+                                setCategoryShowCard()
                             }
 
         }
@@ -65,45 +71,31 @@ function paintCategoryCards(items){
     let myTable='<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
         myTable+=`
-        <style>
-        .button {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 16px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.6s;
-            cursor: pointer;
-          }
         
-        .button3 {
-                background-color: white; 
-                color: black; 
-                border: 2px solid #f44336;
-                }
-
-        .button3:hover {
-                        background-color: #f44336;
-                        color: white;
-                        }
-        </style>
-        
-        <div class= "card" style="width: 18rem; padding: 8px; border-width: 2px;">
+        <div class= "card cardResultGen">
             <div class= "card body" style= "border-width:0px">
                 <h4 class= "card-title"><strong>Category ${items[i].id}</strong></h4>
                 <h6 class= "card-subtitle mb-2 text-muted">${items[i].name}</h6>
                 <p class= "card-text">${items[i].description}</p>
                 <button class="btn button3" onclick= "deletePartyroom(${items[i].id})">Delete Category</button>
                 </div>
-            </div> 
+        </div> 
         `
     }
     myTable+= "</div></div>";
     $("#result").append(myTable);
+}
+function setCategoryShowCard(){
+    $("#cardCategory").empty();
+    let f1 = `<div class="container">
+                <div class="card border-0" style="width: 14rem;">
+                <h1 class="mainCardTitle">Categories</h1>
+                <button class="btn buttonGenShow" onclick ="bringCategory()">Show Categories</button>
+                <button class="btn buttonGenSetSave" onclick="setCategorySaveCard()">New Category</button>
+            </div>`;
+
+    $("#cardCategory").append(f1);
+
 }
 
 function setCategorySaveCard(){
@@ -111,41 +103,21 @@ function setCategorySaveCard(){
     $("#cardCategory").empty();
 
     let formulario = `<div class="container">
-                        <div class="card" style="width: 14rem;">
-                            <input type="text" id="categoryName" placeholder="category name" margin-bottom: 2px;>
-                            <input type="text" id="categoryDescription" placeholder="category description" margin-top: 2px; margin-bottom: 2px;>
+                        <div class="card border-0" style="width: 14rem;">
+                            <input type="text" id="categoryName" placeholder="category name" style="margin-bottom: 2px;">
+                            <input type="text" id="categoryDescription" placeholder="category description" style="margin-top: 6px; margin-bottom: 20px;">
                             <button class ="btn btn-success" onclick="saveCategory()"> Save</button>
+                            <button class ="btn btn-danger" onclick="cancelSaveCategory()"> Cancel</button>
                         </div>
                     </div>`;
 
     $("#cardCategory").append(formulario);
-
 }
-//<a href="#" class="btn btn-primary"onclick= 'deleteCategory(" + items[i].id + ")'>Go somewhere</a>
 
-//depre u.u
-/*
-function pintarRespuestaCategoria(items){
-
-     $("#result").empty();
-
-    //declarar variables js
-    let myTable="<table>";
-    myTable += "<tr><th>Id</th><th>Name</th></tr>";
-    for(i=0;i<items.length;i++){
-        myTable+="<tr>";
-        myTable+="<td>"+ items[i].id+ "</td>";
-        myTable+="<td>"+ items[i].name+"</td>";
-        myTable+="<td>"+ items[i].description+"</td>";
-        // myTable+="<td><button onclick='borrarCategoria("+items[i].id+")'>Borrar</button>";
-        myTable+="</tr>";
-    }
-    myTable +="</table>";
-    $("#result").append(myTable);
+function cancelSaveCategory(){
+    $("#cardCategory").empty();
+    setCategoryShowCard();
 }
-*/
-
-
 
 function bringPartyroom(){
     $.ajax(
@@ -193,8 +165,9 @@ function savePartyroom(){
             error       :   function(xhr,status){
                                 alert('Operacion no satisfactoria,'+ xhr.status );
                             },
-            completed   :   function(a){
+            complete    :   function(){
                                 bringPartyroom();
+                                setPartyroomShowCard();
                             }    
 
         }
@@ -208,30 +181,9 @@ function paintPartyroomCard(items){
     for (i=0; i<items.length; i++){
         myTable+=`
         <style>
-        .button {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 16px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.6s;
-            cursor: pointer;
-          }
-        .button3 {
-            background-color: white; 
-            color: black; 
-            border: 2px solid #f44336;
-            }
-        .button3:hover {
-                    background-color: #f44336;
-                    color: white;
-                    }
+        
         </style>
-        <div class= "card" style="width: 18rem; padding: 10px;">
+        <div class= "card cardResultGen">
             <div class= "card body border-0">
                 <h4 class= "card-title">Partyroom ${items[i].id}</h4>
                 <h5 class= "card-subtitle mb-2 text">${items[i].name}</h5>
@@ -252,27 +204,50 @@ function paintPartyroomCard(items){
     $("#result").append(myTable);
 }
 
-function eraseCatDiv(){
-    $("#cardCategory").empty();
+function setPartyroomShowCard(){
+    $("#cardPartyroom").empty();
+    let f1 = `<div class="container">
+                <div class="card border-0" style="width: 14rem;">
+                <h1 class="mainCardTitle">Partyrooms</h1>
+                <button class="btn buttonGenShow" onclick ="bringPartyroom()">Show Partyrooms</button>
+                <button class="btn buttonGenSetSave" onclick="setPartyroomSaveCard()">New Partyroom</button>
+            </div>`;
+
+    $("#cardPartyroom").append(f1);
+
 }
 
+function setPartyroomSaveCard(){
+
+    $("#cardPartyroom").empty();
+
+    let formulario = `<div class="container">
+                        <div class="card border-0" style="width: 14rem;">
+                            <input type="text" id="partyroomOwner" placeholder="Partyroom Owner" style="margin-bottom: 2px;">
+                            <input type="text" id="partyroomCapacity" placeholder="Partyroom capacity" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="number" id="idCategory" placeholder="Category Id" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="text" id="partyroomName" placeholder="Partyroom Name" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="text" id="partyroomDesc" placeholder="Partyroom Description" style="margin-top: 6px; margin-bottom: 10px;">
+                            <button class ="btn btn-success" onclick="savePartyroom()"> Save</button>
+                            <button class ="btn btn-danger" onclick="cancelSavePartyroom()"> Cancel</button>
+                        </div>
+                    </div>`;
+
+    $("#cardPartyroom").append(formulario);
+
+}
+function cancelSavePartyroom(){
+    $("#cardPartyroom").empty();
+    setPartyroomShowCard();
+}
 
 
 function deletePartyroom(idPartyroom) {
 
-    let data={
-        id:idPartyroom,
-    };
-
-    
-    let dataToSend= JSON.stringify(data);
-    console.log(dataToSend);
-
     $.ajax({
-        url : 'http://129.80.206.229/api/Partyroom/{id}',
+        url : 'http://129.80.206.229/api/Partyroom/' + idPartyroom,
         
         type        :   'DELETE',
-        data        :   dataToSend,
         contentType :   'application/json',
 
         success     :   function(pepe) {
@@ -289,35 +264,6 @@ function deletePartyroom(idPartyroom) {
         });
 
 }
-
-//deprec u.u
-/*
-function pintarRespuestaPartyroom(items){
-
-    $("#result").empty();
-
-   //declarar variables js
-   let myTable="<table>";
-   myTable += "<tr><th>Id</th><th>name</th> <th> Owner</th><th>Capacity</th><th>description</th><th>Category Id</th><th>Category Name</th><th>Category Description</th> <th>Messages</th><th>Reservation</th></tr>";
-   for(i=0;i<items.length;i++){
-       myTable+="<tr>";
-       myTable+="<td>"+items[i].id+"</td>";
-       myTable+="<td>"+items[i].name+"</td>";
-       myTable+="<td>"+items[i].owner+"</td>";
-       myTable+="<td>"+items[i].capacity+"</td>";
-       myTable+="<td>"+items[i].description+"</td>";                
-       myTable+="<td>"+items[i].category.id +"</td>";                
-       myTable+="<td>"+items[i].category.name +"</td>";                
-       myTable+="<td>"+items[i].category.description +"</td>";                
-       myTable+="<td>"+items[i].messages +"</td>";                        
-       myTable+="<td>"+items[i].reservations+"</td>";                
-       // myTable+="<td><button onclick='borrarElemento("+items[i].id+")'>Borrar</button>";
-       myTable+="</tr>";
-   }
-   myTable +="</table>";
-   $("#result").append(myTable);
-}
-*/
 
 
 function saveClient(){
@@ -347,6 +293,7 @@ function saveClient(){
                             },
             complete    :   function(whoo){
                             bringClient();
+                            setClientShowCard();
                             }                
 
         }
@@ -373,20 +320,12 @@ function bringClient(){
 }
 
 function deleteClient(idClientDel) {
-
-    let data={
-        id:idClientDel,
-    };
-
     
-    let dataToSend= JSON.stringify(data);
-
     $.ajax({
-        url : 'http://129.80.206.229/api/Client/{dataToSend}',
+        url         :   'http://129.80.206.229/api/Client/' + idClientDel,
         
         type        :   'DELETE',
-        data        :   dataToSend,
-        contentType :   'application/json',
+        
 
         success     :   function(pepe) {
                         alert("Successfully deleted");
@@ -409,16 +348,16 @@ function paintClientCards(items){
     let myTable='<div class="container"><div class="row">';
     for (i=0; i<items.length; i++){
         myTable+=`
-        <div class= "card" style="width: 18rem;">
-            <div class= "card body">
-                <h4 class= "card-title">${items[i].idClient}</h4>
+        <div class= "card cardResultGen">
+            <div class= "card body border-0">
+                <h4 class= "card-title cardTitle">Client ${items[i].idClient}</h4>
                 <h5 class= "card-subtitle mb-2 text-muted">${items[i].email}</h5>
                 <h5 class= "card-text">${items[i].password}</h5>
                 <h5 class= "card-text">${items[i].name}</h5>
                 <h5 class= "card-text">${items[i].age}</h5>
                 <p class= "card-text">${items[i].messages}</p>
                 <p class= "card-text">${items[i].reservations}</p>
-                <button class="btn btn-danger" onclick= "deleteClient(${items[i].idClient})">Delete Client</button>
+                <button class="btn button3" onclick= "deleteClient(${items[i].idClient})">Delete Client</button>
                 
                 
                 </div>
@@ -427,6 +366,42 @@ function paintClientCards(items){
     }
     myTable+= "</div></div>";
     $("#result").append(myTable);
+}
+
+function setClientShowCard(){
+    $("#cardClient").empty();
+    let f1 = `<div class="container">
+                <div class="card border-0" style="width: 14rem;">
+                <h1 class="mainCardTitle">Clients</h1>
+                <button class="btn buttonGenShow" onclick ="bringClient()">Show Clients</button>
+                <button class="btn buttonGenSetSave" onclick="setClientSaveCard()">Register Client</button>
+            </div>`;
+
+    $("#cardClient").append(f1);
+
+}
+
+function setClientSaveCard(){
+
+    $("#cardClient").empty();
+
+    let formulario = `<div class="container">
+                        <div class="card border-0" style="width: 14rem;">
+                            <input type="text" id="clientName" placeholder="Client Name" style="margin-bottom: 2px;">
+                            <input type="text" id="clientEmail" placeholder="Client email" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="text" id="clientPassword" placeholder="Client Password" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="number" id="clientAge" placeholder= "Client Age" style="margin-top: 6px; margin-bottom: 10px;">
+                            <button class ="btn btn-success" onclick="saveClient()"> Save</button>
+                            <button class ="btn btn-danger" onclick="cancelSaveClient()"> Cancel</button>
+                        </div>
+                    </div>`;
+
+    $("#cardClient").append(formulario);
+
+}
+function cancelSaveClient(){
+    $("#cardClient").empty();
+    setClientShowCard();
 }
 
 /*
@@ -477,10 +452,45 @@ function saveMessage(){
                             },
             error       :   function(xhr,status){
                                 alert('Operacion no satisfactoria,'+ xhr.status );
+                            },
+            complete   :   function(m){
+                                bringMessage();
+                                setMessageShowCard();
                             }
 
         }
     );
+}
+
+function deleteMessage(idMessDel) {
+
+    let data={
+        idMessage:idMessDel,
+    };
+
+    
+    let dataToSend= JSON.stringify(data);
+
+    $.ajax({
+        url : 'http://129.80.206.229/api/Message/{idMessDel}',
+        
+        type        :   'DELETE',
+        data        :   dataToSend,
+        contentType :   'application/json',
+
+        success     :   function(pepe) {
+                        alert("Successfully deleted");
+                        },
+        /*error : function(xhr, status) {
+        alert('ha sucedido un problema');
+        },*/
+
+        complete    :   function(){
+                        bringMessage();
+                        }
+        
+        });
+
 }
 
 function bringMessage(){
@@ -490,7 +500,7 @@ function bringMessage(){
                 type:"GET",
                 datatype:"JSON",
                 success:function(respuesta){
-                    pintarRespuestaMessage(respuesta);                    
+                    paintRespuestaMessage(respuesta);                    
                 },
                 error       :   function(xhr,status){
                     alert('Operacion no satisfactoria,'+ xhr.status );
@@ -503,40 +513,73 @@ function bringMessage(){
 }
 
 
-function pintarRespuestaMessage(items){
+function paintRespuestaMessage(items){
 
     $("#result").empty();
-
-   //declarar variables js
-   let myTable="<table>";
-   myTable += "<tr><th>Codigo</th><th> Mensaje</th><th>codigo Bicicleta</th><th>Nombre Bicicleta</th><th>Codigo Cliente</th><th>Nombre Cliente</th></tr>";
-   for(i=0;i<items.length;i++){
-       myTable+="<tr>";
-       myTable+="<td>"+items[i].idMessage+"</td>";
-       myTable+="<td>"+items[i].messageText+"</td>";
-       myTable+="<td>"+items[i].partyroom.id+"</td>";       
-       myTable+="<td>"+items[i].partyroom.name+"</td>";
-       myTable+="<td>"+items[i].partyroom.owner+"</td>";
-       myTable+="<td>"+items[i].partyroom.capacity+"</td>";
-       myTable+="<td>"+items[i].partyroom.description+"</td>";
-       myTable+="<td>"+items[i].partyroom.category.id+"</td>";
-       myTable+="<td>"+items[i].partyroom.category.name+"</td>";
-       myTable+="<td>"+items[i].partyroom.category.description+"</td>";
-       myTable+="<td>"+items[i].client.idClient+"</td>";
-       myTable+="<td>"+items[i].client.email+"</td>";
-       myTable+="<td>"+items[i].client.password+"</td>";
-       myTable+="<td>"+items[i].client.name+"</td>";
-       myTable+="<td>"+items[i].client.age+"</td>";
-       
-       // myTable+="<td><button onclick='borrarElemento("+items[i].id+")'>Borrar</button>";
-       myTable+="</tr>";
-   }
-   myTable +="</table>";
-   $("#result").append(myTable);
+    let myTable='<div class="container"><div class="row">';
+    for (i=0; i<items.length; i++){
+        myTable+=`
+        <div class= "card cardResultGen">
+            <div class= "card body border-0">
+                <h2 class= "card-title cardTitle"> Message ${items[i].idMessage}</h2>
+                <h4 class= "card-subtitle" style="margin-bottom: 20px;">${items[i].messageText}</h4>
+                <h5 class= "card-subtitle">Left in</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Partyroom ${items[i].partyroom.id}/${items[i].partyroom.name}</li>
+                    <li class="list-group-item">Owned by ${items[i].partyroom.owner}</li>
+                    <li class="list-group-item">Category ${items[i].partyroom.category.id}/${items[i].partyroom.category.name}</li>
+                </ul>
+                <h5 class= "card-text">By</h5>
+                <ul class="list-group list-group-flush" style="margin-bottom:20px;">
+                    <li class="list-group-item">Made by Client ${items[i].client.idClient}/${items[i].client.name}</li>
+                    <li class="list-group-item">${items[i].client.email}</li>
+                </ul>
+                <button class="btn button3" onclick= "deleteMessage(${items[i].idMessage})">Delete Message</button>
+                
+                
+                </div>
+            </div> 
+        `
+    }
+    myTable+= "</div></div>";
+    $("#result").append(myTable);
 }
 
-// {"startDate":"2020-12-20","devolutionDate":"2020-12-20",
-// "client":{"idClient":1},"bike":{"id":1}}
+function setMessageShowCard(){
+    $("#cardMessage").empty();
+    let f1 = `<div class="container">
+                <div class="card border-0" style="width: 14rem;">
+                <h1 class="mainCardTitle">Messages</h1>
+                <button class="btn buttonGenShow" onclick ="bringMessage()">Show Messages</button>
+                <button class="btn buttonGenSetSave" onclick="setMessageSaveCard()">New Message</button>
+            </div>`;
+
+    $("#cardMessage").append(f1);
+
+}
+
+function setMessageSaveCard(){
+
+    $("#cardMessage").empty();
+
+    let formulario = `<div class="container">
+                        <div class="card border-0" style="width: 14rem;">
+                            <input type="text" id="messageText" placeholder="Message Text" style="margin-bottom: 2px;">
+                            <input type="number" id="idClientM" placeholder="Client Id" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="number" id="idPartyroomM" placeholder="Partyroom Id" style="margin-top: 6px; margin-bottom: 20px;">
+                            <button class ="btn btn-success" onclick="saveMessage()"> Save</button>
+                            <button class ="btn btn-danger" onclick="cancelSaveMessage()"> Cancel</button>
+                        </div>
+                    </div>`;
+
+    $("#cardMessage").append(formulario);
+
+}
+function cancelSaveMessage(){
+    $("#cardMessage").empty();
+    setMessageShowCard();
+}
+
 function saveReserv(){
 
     $("#result").empty();
@@ -561,10 +604,45 @@ function saveReserv(){
                             },
             error       :   function(xhr,status){
                                 alert('Operacion no satisfactoria,'+ xhr.status );
+                            },
+            complete    :   function(r){
+                                bringReserv();
+                                setReservShowCard();
                             }
 
         }
     );
+}
+
+function deleteReserv(idResDel) {
+
+    let data={
+        idReservation:idResDel,
+    };
+
+    
+    let dataToSend= JSON.stringify(data);
+
+    $.ajax({
+        url : 'http://129.80.206.229/api/Message/{idResDel}',
+        
+        type        :   'DELETE',
+        data        :   dataToSend,
+        contentType :   'application/json',
+
+        success     :   function(pepe) {
+                        alert("Successfully deleted");
+                        },
+        /*error : function(xhr, status) {
+        alert('ha sucedido un problema');
+        },*/
+
+        complete    :   function(){
+                        bringReserv();
+                        }
+        
+        });
+
 }
 
 function bringReserv(){
@@ -574,7 +652,7 @@ function bringReserv(){
                 type:"GET",
                 datatype:"JSON",
                 success:function(respuesta){
-                    pintarRespuestaReservation(respuesta);                    
+                    paintRespuestaReservation(respuesta);                    
                 },
                 error       :   function(xhr,status){
                     alert('Operacion no satisfactoria,'+ xhr.status );
@@ -586,40 +664,70 @@ function bringReserv(){
           );
 }
 
-
-function pintarRespuestaReservation(items){
+function paintRespuestaReservation(items){
 
     $("#result").empty();
+    let myTable='<div class="container"><div class="row">';
+    for (i=0; i<items.length; i++){
+        myTable+=`
+        <div class= "card cardResultGen">
+            <div class= "card body border-0">
+                <h4 class= "card-title cardTitle"> Reservation ${items[i].idReservation}</h4>
+                <h5 class= "card-subtitle mb-2 text-muted">From ${items[i].startDate}</h5>
+                <h5 class= "card-text">To ${items[i].devolutionDate}</h5>
+                <h3 class= "card-text">Made in</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Partyroom ${items[i].partyroom.id}/${items[i].partyroom.name}</li>
+                    <li class="list-group-item">Owned by ${items[i].partyroom.owner}</li>
+                    <li class="list-group-item">Category ${items[i].partyroom.category.id}/${items[i].partyroom.category.name}</li>
+                </ul
+                <h3 class= "card-text text-muted">Made by</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">${items[i].client.idClient}/${items[i].client.name}</li>
+                    <li class="list-group-item">${items[i].client.email}</li>
+                </ul>
+                <h3 class= "card-text text-muted">Score ${items[i].score}</h3>
+                <button class="btn button3" onclick= "deleteMessage(${items[i].idReservation})">Delete Reservation</button>
+                </div>
+            </div> 
+        `
+    }
+    myTable+= "</div></div>";
+    $("#result").append(myTable);
+}
 
-   //declarar variables js
-   let myTable="<table>";
-   myTable += "<tr><th>Codigo Res</th><th> Fecha Inicio</th><th>Fecha fin</th><th>Status</th><th>Codigo bicicleta</th><th>Nombre bicicleta</th><th>Codigo Cliente</th><th>Nombre Cliente</th></tr>";
-   for(i=0;i<items.length;i++){
-       myTable+="<tr>";
-       myTable+="<td>"+items[i].idReservation+"</td>";
-       myTable+="<td>"+items[i].startDate+"</td>";
-       myTable+="<td>"+items[i].devolutionDate+"</td>";
-       myTable+="<td>"+items[i].status+"</td>";       
-       myTable+="<td>"+items[i].partyroom.id+"</td>";
-       myTable+="<td>"+items[i].partyroom.name+"</td>";
-       myTable+="<td>"+items[i].partyroom.owner+"</td>";
-       myTable+="<td>"+items[i].partyroom.capacity+"</td>";
-       myTable+="<td>"+items[i].partyroom.description+"</td>";
-       myTable+="<td>"+items[i].partyroom.category.id+"</td>";
-       myTable+="<td>"+items[i].partyroom.category.name+"</td>";
-       myTable+="<td>"+items[i].partyroom.category.description+"</td>";
-       myTable+="<td>"+items[i].partyroom.messages.idMessage+"</td>";
-       myTable+="<td>"+items[i].partyroom.messages.messageText+"</td>";
-       myTable+="<td>"+items[i].client.idClient+"</td>";
-       myTable+="<td>"+items[i].client.email+"</td>";
-       myTable+="<td>"+items[i].client.password+"</td>";
-       myTable+="<td>"+items[i].client.name+"</td>";
-       myTable+="<td>"+items[i].client.age+"</td>";
-       myTable+="<td>"+items[i].score+"</td>";
-       
-       // myTable+="<td><button onclick='borrarElemento("+items[i].id+")'>Borrar</button>";
-       myTable+="</tr>";
-   }
-   myTable +="</table>";
-   $("#result").append(myTable);
+function setReservShowCard(){
+    $("#cardReservation").empty();
+    let f1 = `<div class="container">
+                <div class="card border-0" style="width: 14rem;">
+                <h1 class="mainCardTitle">Reservations</h1>
+                <button class="btn buttonGenShow" onclick ="bringReserv()">Show Reservations</button>
+                <button class="btn buttonGenSetSave" onclick="setReservSaveCard()">New Reservation</button>
+            </div>`;
+
+    $("#cardReservation").append(f1);
+
+}
+
+function setReservSaveCard(){
+
+    $("#cardReservation").empty();
+
+    let formulario = `<div class="container">
+                        <div class="card border-0" style="width: 14rem;">
+                            <input type="date" id="startDate" placeholder="Start Date" style="margin-bottom: 2px;">
+                            <input type="date" id="devolutionDate" placeholder="Devolution Date" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="number" id="idClientR" placeholder="Id Client" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="number" id="idPartyroomR" placeholder="Id Partyroom" style="margin-top: 6px; margin-bottom: 10px;">
+                            <button class ="btn btn-success" onclick="saveReserv()"> Save</button>
+                            <button class ="btn btn-danger" onclick="cancelSaveReserv()"> Cancel</button>
+                        </div>
+                    </div>`;
+
+    $("#cardReservation").append(formulario);
+
+}
+function cancelSaveReserv(){
+    $("#cardReservation").empty();
+    setReservShowCard();
 }
