@@ -6,7 +6,8 @@ $(document).ready(function(){
     setPartyroomShowCard();
     setClientShowCard();
     setMessageShowCard();
-    setReservShowCard()
+    setReservShowCard();
+    setReportShowCard()
     });
 
 
@@ -28,10 +29,10 @@ function saveCategory(){
             success      :  function(respuesta){
                             $("#categoryName").val("");
                             $("#categoryDescription").val("");
-                            alert("Inserción exitosa");
+                            alert("Success");
                             },
             error       :   function(xhr,status){
-                                alert('Operacion no satisfactoria,'+ xhr.status );
+                                alert('Something went wrong'+ xhr.status );
                             },
             complete    :   function(){
                                 bringCategory();
@@ -40,6 +41,26 @@ function saveCategory(){
 
         }
     );
+}
+function deleteCategory(idCategory) {
+
+    $.ajax({
+        url         :   'http://129.80.206.229/api/Category/' + idCategory,
+        type        :   'DELETE',
+
+        success     :   function(pepe) {
+                        alert("Successfully deleted");
+                        },
+        /*error : function(xhr, status) {
+        alert('ha sucedido un problema');
+        },*/
+
+        complete    :   function(){
+                        bringCategory();
+                        }
+        
+        });
+
 }
 
 
@@ -54,7 +75,7 @@ function bringCategory(){
                     
                 },
                 error       :   function(xhr,status){
-                    alert('Operacion no satisfactoria,'+ xhr.status );
+                    alert('Something went wrong'+ xhr.status );
                 }
             
                     
@@ -68,16 +89,17 @@ function paintCategoryCards(items){
 
     $("#result").empty();
     
-    let myTable='<div class="container"><div class="row">';
+    let myTable='<div class="container"><div class="row"><h2 class="tableTitle">Categories</h2>';
+    
     for (i=0; i<items.length; i++){
         myTable+=`
         
         <div class= "card cardResultGen">
-            <div class= "card body" style= "border-width:0px">
-                <h4 class= "card-title"><strong>Category ${items[i].id}</strong></h4>
-                <h6 class= "card-subtitle mb-2 text-muted">${items[i].name}</h6>
+            <div class= "card body border-0" style="padding: 8px;">
+                <h4 class= "card-title cardTitle">Category ${items[i].id}</h4>
+                <h5 class= "card-subtitle">${items[i].name}</h5>
                 <p class= "card-text">${items[i].description}</p>
-                <button class="btn button3" onclick= "deletePartyroom(${items[i].id})">Delete Category</button>
+                <button class="btn button3" onclick= "deleteCategory(${items[i].id})">Delete Category</button>
                 </div>
         </div> 
         `
@@ -106,8 +128,8 @@ function setCategorySaveCard(){
                         <div class="card border-0" style="width: 14rem;">
                             <input type="text" id="categoryName" placeholder="category name" style="margin-bottom: 2px;">
                             <input type="text" id="categoryDescription" placeholder="category description" style="margin-top: 6px; margin-bottom: 20px;">
-                            <button class ="btn btn-success" onclick="saveCategory()"> Save</button>
-                            <button class ="btn btn-danger" onclick="cancelSaveCategory()"> Cancel</button>
+                            <button class ="btn buttonGenSetSave" onclick="saveCategory()"> Save</button>
+                            <button class ="btn buttonGenCancel" onclick="cancelSaveCategory()"> Cancel</button>
                         </div>
                     </div>`;
 
@@ -126,10 +148,15 @@ function bringPartyroom(){
                 type:"GET",
                 datatype:"JSON",
                 success:function(respuesta){
-                    paintPartyroomCard(respuesta);                    
+                    if(respuesta.length == 0){
+                        paintPartyroomEmpty();
+                    }else{
+                        paintPartyroomCard(respuesta);
+                    }
+                    
                 },
                 error       :   function(xhr,status){
-                    alert('Operacion no satisfactoria,'+ xhr.status );
+                    alert('Something went wrong'+ xhr.status );
                 }
             
                     
@@ -137,7 +164,6 @@ function bringPartyroom(){
                
           );
 }
-
 
 function savePartyroom(){
 
@@ -160,10 +186,10 @@ function savePartyroom(){
                             $("#idCategory").val("");
                             $("#partyroomName").val("");
                             $("#partyroomDesc").val("");
-                            alert("Inserción exitosa");
+                            alert("Success");
                             },
             error       :   function(xhr,status){
-                                alert('Operacion no satisfactoria,'+ xhr.status );
+                                alert('Something went wrong'+ xhr.status );
                             },
             complete    :   function(){
                                 bringPartyroom();
@@ -177,31 +203,45 @@ function savePartyroom(){
 function paintPartyroomCard(items){
 
     $("#result").empty();
-    let myTable= '<div class="container"><div class="row">';
+    let myTable= '<div class="container"><div class="row"><h2 class="tableTitle">Partyrooms</h2>';
     for (i=0; i<items.length; i++){
         myTable+=`
-        <style>
-        
-        </style>
         <div class= "card cardResultGen">
-            <div class= "card body border-0">
-                <h4 class= "card-title">Partyroom ${items[i].id}</h4>
+            <div class= "card body border-0" style="padding: 8px;">
+                <h4 class= "card-title cardTitle">Partyroom ${items[i].id}</h4>
                 <h5 class= "card-subtitle mb-2 text">${items[i].name}</h5>
                 <h5 class= "card-subtitle mb-2 text-muted">Owned by: ${items[i].owner}</h5>
                 <h6 class= "card-subtitle mb-2 text-muted">Capacity: ${items[i].capacity}</h6>
                 <p class= "card-text">${items[i].description}</p>
-                <h6 class= "card-subtitle mb-2 text">Category ID: ${items[i].category.id}</h6>
-                <h5 class= "card-subtitle mb-2 text-muted">${items[i].category.name}</h5>
-                <h5 class= "card-subtitle mb-2 text-muted">${items[i].category.description}</h5>
-                <h5 class= "card-subtitle mb-2 text">${items[i].messages}</h5>
-                <h5 class= "card-subtitle mb-2 text">${items[i].reservations}</h5>
+                <h6 class= "card-subtitle mb-2 text">Belongs to</h6>
+                <ul class="list-group list-group-flush" style="margin-bottom: 7px;">
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Category ${items[i].category.id}/${items[i].category.name}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">${items[i].category.description}</li>
+                </ul>
+                <h6 class=card-text">Messages in this partyroom</h6>
+                <ul class="list-group list-group-flush" style="margin-bottom: 7px;">
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">${items[i].messages.messageText}</li>
+                </ul>
+                <h6 class=card-text">Reservations made for this partyroom</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">${items[i].reservations}</li>
+                </ul>
                 <button class="btn button3" onclick= "deletePartyroom(${items[i].id})">Delete Partyroom</button>
                 </div>
             </div> 
         `
+        
     }
     myTable+= "</div></div>";
     $("#result").append(myTable);
+}
+
+function paintPartyroomEmpty(){
+    $("#result").empty();
+    let myTable= '<div class="container"><div class="row"><h2 class="tableTitle">Partyrooms <p style="color:white; font-size:16px;">(currently empty)</p></h2>';
+    $("#result").append(myTable);  
+
+
 }
 
 function setPartyroomShowCard(){
@@ -228,8 +268,8 @@ function setPartyroomSaveCard(){
                             <input type="number" id="idCategory" placeholder="Category Id" style="margin-top: 6px; margin-bottom: 2px;">
                             <input type="text" id="partyroomName" placeholder="Partyroom Name" style="margin-top: 6px; margin-bottom: 2px;">
                             <input type="text" id="partyroomDesc" placeholder="Partyroom Description" style="margin-top: 6px; margin-bottom: 10px;">
-                            <button class ="btn btn-success" onclick="savePartyroom()"> Save</button>
-                            <button class ="btn btn-danger" onclick="cancelSavePartyroom()"> Cancel</button>
+                            <button class ="btn buttonGenSetSave" onclick="savePartyroom()"> Save</button>
+                            <button class ="btn buttonGenCancel" onclick="cancelSavePartyroom()"> Cancel</button>
                         </div>
                     </div>`;
 
@@ -246,9 +286,7 @@ function deletePartyroom(idPartyroom) {
 
     $.ajax({
         url : 'http://129.80.206.229/api/Partyroom/' + idPartyroom,
-        
         type        :   'DELETE',
-        contentType :   'application/json',
 
         success     :   function(pepe) {
                         alert("Successfully deleted");
@@ -286,10 +324,10 @@ function saveClient(){
                             $("#clientEmail").val("");
                             $("#clientPassword").val("");
                             $("#clientAge").val("");
-                            alert("Inserción exitosa");
+                            alert("Success");
                             },
             error       :   function(xhr,status){
-                                alert('Operacion no satisfactoria,'+ xhr.status );
+                                alert('Something went wrong'+ xhr.status );
                             },
             complete    :   function(whoo){
                             bringClient();
@@ -310,7 +348,7 @@ function bringClient(){
                     paintClientCards(respuesta);                    
                 },
                 error       :   function(xhr,status){
-                    alert('Operacion no satisfactoria,'+ xhr.status );
+                    alert('Something went wrong'+ xhr.status );
                 }
             
                     
@@ -323,7 +361,6 @@ function deleteClient(idClientDel) {
     
     $.ajax({
         url         :   'http://129.80.206.229/api/Client/' + idClientDel,
-        
         type        :   'DELETE',
         
 
@@ -345,18 +382,24 @@ function deleteClient(idClientDel) {
 function paintClientCards(items){
 
     $("#result").empty();
-    let myTable='<div class="container"><div class="row">';
+    let myTable='<div class="container"><div class="row"><h2 class="tableTitle">Clients</h2>';
     for (i=0; i<items.length; i++){
         myTable+=`
         <div class= "card cardResultGen">
-            <div class= "card body border-0">
+            <div class= "card body border-0" style="padding: 8px;">
                 <h4 class= "card-title cardTitle">Client ${items[i].idClient}</h4>
                 <h5 class= "card-subtitle mb-2 text-muted">${items[i].email}</h5>
-                <h5 class= "card-text">${items[i].password}</h5>
+                <h6 class= "card-text text-muted">${items[i].password}</h6>
                 <h5 class= "card-text">${items[i].name}</h5>
                 <h5 class= "card-text">${items[i].age}</h5>
-                <p class= "card-text">${items[i].messages}</p>
-                <p class= "card-text">${items[i].reservations}</p>
+                <h6 class=card-text">Messages</h6>
+                <ul class="list-group list-group-flush" style="margin-bottom: 7px;">
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">${items[i].messages.messageText}</li>
+                </ul>
+                <h6 class=card-text">Reservations made</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">${items[i].reservations}</li>
+                </ul>
                 <button class="btn button3" onclick= "deleteClient(${items[i].idClient})">Delete Client</button>
                 
                 
@@ -391,8 +434,8 @@ function setClientSaveCard(){
                             <input type="text" id="clientEmail" placeholder="Client email" style="margin-top: 6px; margin-bottom: 2px;">
                             <input type="text" id="clientPassword" placeholder="Client Password" style="margin-top: 6px; margin-bottom: 2px;">
                             <input type="number" id="clientAge" placeholder= "Client Age" style="margin-top: 6px; margin-bottom: 10px;">
-                            <button class ="btn btn-success" onclick="saveClient()"> Save</button>
-                            <button class ="btn btn-danger" onclick="cancelSaveClient()"> Cancel</button>
+                            <button class ="btn buttonGenSetSave" onclick="saveClient()"> Save</button>
+                            <button class ="btn buttonGenCancel" onclick="cancelSaveClient()"> Cancel</button>
                         </div>
                     </div>`;
 
@@ -448,10 +491,10 @@ function saveMessage(){
                             $("#messageText").val("");
                             $("#idClient").val("");
                             $("#idPartyroom").val("");
-                            alert("Inserción exitosa");
+                            alert("Success!");
                             },
             error       :   function(xhr,status){
-                                alert('Operacion no satisfactoria,'+ xhr.status );
+                                alert('Something went wrong'+ xhr.status );
                             },
             complete   :   function(m){
                                 bringMessage();
@@ -464,19 +507,9 @@ function saveMessage(){
 
 function deleteMessage(idMessDel) {
 
-    let data={
-        idMessage:idMessDel,
-    };
-
-    
-    let dataToSend= JSON.stringify(data);
-
     $.ajax({
-        url : 'http://129.80.206.229/api/Message/{idMessDel}',
-        
+        url : 'http://129.80.206.229/api/Message/' + idMessDel,
         type        :   'DELETE',
-        data        :   dataToSend,
-        contentType :   'application/json',
 
         success     :   function(pepe) {
                         alert("Successfully deleted");
@@ -503,7 +536,7 @@ function bringMessage(){
                     paintRespuestaMessage(respuesta);                    
                 },
                 error       :   function(xhr,status){
-                    alert('Operacion no satisfactoria,'+ xhr.status );
+                    alert('Something went wrong'+ xhr.status );
                 }
             
                     
@@ -516,23 +549,23 @@ function bringMessage(){
 function paintRespuestaMessage(items){
 
     $("#result").empty();
-    let myTable='<div class="container"><div class="row">';
+    let myTable='<div class="container"><div class="row"><h2 class="tableTitle">Messages</h2>';
     for (i=0; i<items.length; i++){
         myTable+=`
         <div class= "card cardResultGen">
-            <div class= "card body border-0">
-                <h2 class= "card-title cardTitle"> Message ${items[i].idMessage}</h2>
+            <div class= "card body border-0" style="padding: 8px;">
+                <h4 class= "card-title cardTitle"> Message ${items[i].idMessage}</h4>
                 <h4 class= "card-subtitle" style="margin-bottom: 20px;">${items[i].messageText}</h4>
                 <h5 class= "card-subtitle">Left in</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Partyroom ${items[i].partyroom.id}/${items[i].partyroom.name}</li>
-                    <li class="list-group-item">Owned by ${items[i].partyroom.owner}</li>
-                    <li class="list-group-item">Category ${items[i].partyroom.category.id}/${items[i].partyroom.category.name}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Partyroom ${items[i].partyroom.id}/${items[i].partyroom.name}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Owned by ${items[i].partyroom.owner}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Category ${items[i].partyroom.category.id}/${items[i].partyroom.category.name}</li>
                 </ul>
                 <h5 class= "card-text">By</h5>
                 <ul class="list-group list-group-flush" style="margin-bottom:20px;">
-                    <li class="list-group-item">Made by Client ${items[i].client.idClient}/${items[i].client.name}</li>
-                    <li class="list-group-item">${items[i].client.email}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Made by Client ${items[i].client.idClient}/${items[i].client.name}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">${items[i].client.email}</li>
                 </ul>
                 <button class="btn button3" onclick= "deleteMessage(${items[i].idMessage})">Delete Message</button>
                 
@@ -567,8 +600,8 @@ function setMessageSaveCard(){
                             <input type="text" id="messageText" placeholder="Message Text" style="margin-bottom: 2px;">
                             <input type="number" id="idClientM" placeholder="Client Id" style="margin-top: 6px; margin-bottom: 2px;">
                             <input type="number" id="idPartyroomM" placeholder="Partyroom Id" style="margin-top: 6px; margin-bottom: 20px;">
-                            <button class ="btn btn-success" onclick="saveMessage()"> Save</button>
-                            <button class ="btn btn-danger" onclick="cancelSaveMessage()"> Cancel</button>
+                            <button class ="btn buttonGenSetSave" onclick="saveMessage()"> Save</button>
+                            <button class ="btn buttonGenCancel" onclick="cancelSaveMessage()"> Cancel</button>
                         </div>
                     </div>`;
 
@@ -584,8 +617,9 @@ function saveReserv(){
 
     $("#result").empty();
 
-    let myData ={startDate:$("#startDate").val(),devolutionDate:$("#devolutionDate").val(),client:{idClient:$("#idClientR").val()},partyroom:{id:$("#idPartyroomR").val()}}
+    let myData ={startDate:$("#startDate").val(),devolutionDate:$("#devolutionDate").val(),status:$("#statusR").val(),client:{idClient:$("#idClientR").val()},partyroom:{id:$("#idPartyroomR").val()}}
     let dataToSend = JSON.stringify(myData);
+    console.log(dataToSend);
 
     $.ajax (
         {
@@ -600,10 +634,11 @@ function saveReserv(){
                             $("#devolutionDate").val("");
                             $("#idClientR").val("");
                             $("#idPartyroomR").val("");
-                            alert("Inserción exitosa");
+                            $("#statusR").val("");
+                            alert("Success!");
                             },
             error       :   function(xhr,status){
-                                alert('Operacion no satisfactoria,'+ xhr.status );
+                                alert('Something went wrong'+ xhr.status );
                             },
             complete    :   function(r){
                                 bringReserv();
@@ -616,19 +651,9 @@ function saveReserv(){
 
 function deleteReserv(idResDel) {
 
-    let data={
-        idReservation:idResDel,
-    };
-
-    
-    let dataToSend= JSON.stringify(data);
-
     $.ajax({
-        url : 'http://129.80.206.229/api/Message/{idResDel}',
-        
+        url         :   'http://129.80.206.229/api/Reservation/' + idResDel,
         type        :   'DELETE',
-        data        :   dataToSend,
-        contentType :   'application/json',
 
         success     :   function(pepe) {
                         alert("Successfully deleted");
@@ -655,7 +680,7 @@ function bringReserv(){
                     paintRespuestaReservation(respuesta);                    
                 },
                 error       :   function(xhr,status){
-                    alert('Operacion no satisfactoria,'+ xhr.status );
+                    alert('Something went wrong'+ xhr.status );
                 }
             
                     
@@ -667,27 +692,27 @@ function bringReserv(){
 function paintRespuestaReservation(items){
 
     $("#result").empty();
-    let myTable='<div class="container"><div class="row">';
+    let myTable='<div class="container"><div class="row"><h2 class="tableTitle">Reservations</h2>';
     for (i=0; i<items.length; i++){
         myTable+=`
         <div class= "card cardResultGen">
-            <div class= "card body border-0">
+            <div class= "card body border-0" style="padding: 8px;">
                 <h4 class= "card-title cardTitle"> Reservation ${items[i].idReservation}</h4>
-                <h5 class= "card-subtitle mb-2 text-muted">From ${items[i].startDate}</h5>
-                <h5 class= "card-text">To ${items[i].devolutionDate}</h5>
-                <h3 class= "card-text">Made in</h3>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Partyroom ${items[i].partyroom.id}/${items[i].partyroom.name}</li>
-                    <li class="list-group-item">Owned by ${items[i].partyroom.owner}</li>
-                    <li class="list-group-item">Category ${items[i].partyroom.category.id}/${items[i].partyroom.category.name}</li>
-                </ul
-                <h3 class= "card-text text-muted">Made by</h3>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">${items[i].client.idClient}/${items[i].client.name}</li>
-                    <li class="list-group-item">${items[i].client.email}</li>
+                <h6 class= "card-subtitle mb-2 text-muted">From ${items[i].startDate}</h6>
+                <h6 class= "card-text text-muted">To ${items[i].devolutionDate}</h6>
+                <h5 class= "card-text">Made in</h5>
+                <ul class="list-group list-group-flush" style="margin-bottom: 4px;">
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Partyroom ${items[i].partyroom.id}/${items[i].partyroom.name}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Owned by ${items[i].partyroom.owner}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Category ${items[i].partyroom.category.id}/${items[i].partyroom.category.name}</li>
                 </ul>
-                <h3 class= "card-text text-muted">Score ${items[i].score}</h3>
-                <button class="btn button3" onclick= "deleteMessage(${items[i].idReservation})">Delete Reservation</button>
+                <h5 class= "card-text" style="margin-bottom: 6px;">Made by</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">Client ${items[i].client.idClient}/${items[i].client.name}</li>
+                    <li class="list-group-item" style="background-color: rgba(44, 43, 43, 0.5); color: white;">${items[i].client.email}</li>
+                </ul>
+                <h5 class= "card-text text-muted">Score ${items[i].score}</h5>
+                <button class="btn button3" onclick= "deleteReserv(${items[i].idReservation})">Delete Reservation</button>
                 </div>
             </div> 
         `
@@ -699,7 +724,7 @@ function paintRespuestaReservation(items){
 function setReservShowCard(){
     $("#cardReservation").empty();
     let f1 = `<div class="container">
-                <div class="card border-0" style="width: 14rem;">
+                <div class="card border-0" style="width: 230px;">
                 <h1 class="mainCardTitle">Reservations</h1>
                 <button class="btn buttonGenShow" onclick ="bringReserv()">Show Reservations</button>
                 <button class="btn buttonGenSetSave" onclick="setReservSaveCard()">New Reservation</button>
@@ -718,9 +743,10 @@ function setReservSaveCard(){
                             <input type="date" id="startDate" placeholder="Start Date" style="margin-bottom: 2px;">
                             <input type="date" id="devolutionDate" placeholder="Devolution Date" style="margin-top: 6px; margin-bottom: 2px;">
                             <input type="number" id="idClientR" placeholder="Id Client" style="margin-top: 6px; margin-bottom: 2px;">
-                            <input type="number" id="idPartyroomR" placeholder="Id Partyroom" style="margin-top: 6px; margin-bottom: 10px;">
-                            <button class ="btn btn-success" onclick="saveReserv()"> Save</button>
-                            <button class ="btn btn-danger" onclick="cancelSaveReserv()"> Cancel</button>
+                            <input type="number" id="idPartyroomR" placeholder="Id Partyroom" style="margin-top: 6px; margin-bottom: 2px;">
+                            <input type="text" id="statusR" placeholder="Status" style="margin-top: 6px; margin-bottom: 10px;">
+                            <button class ="btn buttonGenSetSave" onclick="saveReserv()"> Save</button>
+                            <button class ="btn buttonGenCancel" onclick="cancelSaveReserv()"> Cancel</button>
                         </div>
                     </div>`;
 
@@ -730,4 +756,153 @@ function setReservSaveCard(){
 function cancelSaveReserv(){
     $("#cardReservation").empty();
     setReservShowCard();
+}
+
+function setReportShowCard(){
+    $("#cardReports").empty();
+
+    let formulario = `<div class="container">
+                            <div class="card border-0" style="width: 14rem;">
+                                <h1 class="mainCardTitleReport">Reports</h1>
+                                <button class ="btn buttonGenReports" onclick="setReportDates()"> Report Reservations by Date</button>
+                                <button class ="btn buttonGenReports" onclick="bringReportStatus()"> Report Reservations by Status</button>
+                                <button class ="btn buttonGenReports" onclick="bringReportClients()"> Report Top Clients</button>
+                            </div>
+                        </div>
+    `;
+    $("#cardReports").append(formulario);
+}
+
+function cancelOp(){
+    $("#cardReports").empty();
+    setReportShowCard();
+}
+
+function setReportDates(){
+    $("#cardReports").empty();
+
+    let formulario = `<div class="container">
+                            <div class="card border-0" style="width: 14rem;">
+                                <h3 class="mainCardTitleReport">Insert dates</h3>
+                                <input type="date" id="rStartDate" placeholder="Start Date" style="margin-bottom: 2px;">
+                                <input type="date" id="rDevolutionDate" placeholder="Devolution Date" style="margin-top: 6px; margin-bottom: 10px;"> 
+                                <button class ="btn buttonGenShow" onclick="bringReportDates()"> Search</button>
+                                <button class ="btn buttonGenCancel" onclick="cancelOp()"> Cancel</button>
+                            </div>
+                        </div>
+    `;
+    $("#cardReports").append(formulario);
+
+}
+
+function bringReportDates(){
+    var fechaInicio = $("#rStartDate").val();
+    var fechaCierre = $("#rDevolutionDate").val();
+
+    //startDate:$("#startDate").val()
+
+    $.ajax({
+        url:"http://129.80.206.229/api/Reservation/report-dates/"+fechaInicio+"/"+fechaCierre,
+        type:"GET",
+        datatype:"JSON",
+        success:function(respuesta){
+            console.log(respuesta);
+            paintReportDate(respuesta);
+            setReportShowCard();
+        }
+    });
+}
+
+function paintReportDate(items) {
+    $("#result").empty();
+    let myTable='<table class="table tableReport1"><h2 class="tableTitle">Report Reservations by Date</h2>';
+        myTable+="<tr>";
+        myTable+="<th>Devolution Date</th>";
+        myTable+="<th>Start Date</th>";
+        myTable+="<th>Status</th>";
+        myTable+="</tr>";
+        for(i=0;i<items.length;i++){
+      
+            myTable+="<tr>";
+            myTable+="<td>"+items[i].devolutionDate+"</td>";
+            myTable+="<td>"+items[i].startDate+"</td>";
+            myTable+="<td>"+items[i].status+"</td>";
+          
+          
+            myTable+="</tr>";
+        }
+        myTable+="</table>";
+    $("#result").html(myTable);
+
+}
+
+function bringReportStatus(){
+    $.ajax({
+        url:"http://129.80.206.229/api/Reservation/report-status",
+        type:"GET",
+        datatype:"JSON",
+        success:function(respuesta){
+            console.log(respuesta);
+            paintReportStatus(respuesta);
+        }
+    });
+}
+
+function paintReportStatus(response){
+    $("#result").empty();
+
+    let formulario = `<div class="container"><h2 class="tableTitle">Report Reservations by Status</h2>
+                        <div class= "card cardResultGen">
+                            <div class="card border-0" style="padding: 4px;">
+                                <h4 class="card-title cardTitle">Reservations Completed</h4>
+                                <h4 class="card-text">${response.completed}</h4>
+                                <h4 class="card-title cardTitle">Reservations Cancelled</h4>
+                                <h4 class="card-text">${response.cancelled}</h4>
+                            </div>
+                        </div>
+                        </div>
+    `;
+    $("#result").append(formulario);
+
+}
+
+function bringReportClients(){
+    $.ajax({
+        url:"http://129.80.206.229/api/Reservation/report-clients",
+        type:"GET",
+        datatype:"JSON",
+        success:function(respuesta){
+            console.log(respuesta);
+            paintReportClients(respuesta);
+        }
+    });
+}
+
+function paintReportClients(items){
+    $("#result").empty();
+    let myTable='<table class="table tableReport1"><h2 class="tableTitle">Report Top Clients</h2>';
+        myTable+="<tr>";
+        myTable+="<th>Total Reservations made</th>";
+        myTable+="<th>Name</th>";  
+        myTable+="<th>Email</th>"; 
+        myTable+="<th>Age</th>"; 
+        myTable+="</tr>";
+        for(i=0;i<items.length;i++){
+            myTable+="<tr>";
+            myTable+="<td>"+items[i].total+"</td>";
+            myTable+="<td>"+items[i].client.name+"</td>";
+            myTable+="<td>"+items[i].client.email+"</td>";
+            myTable+="<td>"+items[i].client.age+"</td>";
+          
+            myTable+="</tr>";
+        }
+        myTable+="</table>";
+    $("#result").html(myTable);
+
+}
+
+function showMes(){
+    $("#result").empty();
+    let myTable='<div class="container"><div class="row"><h4 class="tableTitle">Message!</h4><div><h6 style="color: white;">Disculpas, no pude agregar lo de autenticación u.u</h6></div>;';
+    $("#result").append(myTable);
 }

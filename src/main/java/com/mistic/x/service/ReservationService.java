@@ -52,6 +52,9 @@ public class ReservationService {
                 if(reservation.getDevolutionDate()!=null){
                     q.get().setDevolutionDate(reservation.getDevolutionDate());
                 }
+                if(reservation.getStatus()!=null){
+                    q.get().setStatus((reservation.getStatus()));
+                }
                 //falta if para status
                 reservationRepository.save(q.get());
                 return q.get();

@@ -8,17 +8,6 @@ body{
     position: relative;
 
 }
-/*
-.bg-image {
-    background-image: url('../fondo1.jpg');
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    height: 100%; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-*/
 
 .cont1{
     display:grid;
@@ -56,34 +45,19 @@ body{
 .button3 {
     background-color: white; 
     color: black; 
-    border: 2px solid #f44336;
+    border: 2px solid #EE4266;
     }
 
 .button3:hover {
     background-color: #EE4266;
     color: white;
     }
-/*
-.grid-container {
-        display: grid;
-        grid-template-columns: auto auto auto auto;
-        gap: 10px;
-        background-color: #2196F3;
-        padding: 10px;
-      }
-      
-.grid-container > div {
-        background-color: rgba(255, 255, 255, 0.8);
-        text-align: left;
-        padding: 20px;
-        font-size: 30px;
-      }
-*/
+
 .cardTitle {
     color: rgb(196, 122, 19);
     background-color: rgb(44, 43, 43);
     font-family: Arial, Helvetica, sans-serif;
-    padding: 6px;
+    font-weight: 100;
     
 }
 
@@ -92,6 +66,7 @@ body{
     width: 18rem;
     height: 300px;
     text-align: left;
+    padding: 4px;
     
 }
 
@@ -114,7 +89,7 @@ body{
     color: rgb(231, 231, 231);
     text-align: right;
     text-decoration: dashed;
-    margin-left: 20px;
+    margin-left: 10px;
     padding: 10px;
     vertical-align: bottom;
     
@@ -124,12 +99,14 @@ body{
     font-size: 30px;
     line-height: 100%;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .showCardsContainer{
     background-color: rgba(89, 89, 89, 0.6);
     padding: 12px;
     gap: 10px;
+    margin-bottom: 20px;
 }
 .showCardsContainer > div {
     margin-left: 10px;
@@ -145,7 +122,7 @@ body{
 .buttonGen {
     width: 15px;
     text-align: center;
-    padding: 10px;
+    padding: 2px;
     font-size: 16px;
 
     display: inline-block;
@@ -166,12 +143,37 @@ body{
 .buttonGenSetSave:hover{
     background-color: rgb(82, 203, 145);
 }
+.buttonGenCancel{
+    background-color: #d64b41;
+    margin-top: 6px;
+}
+.buttonGenCancel:hover{
+    background-color: #e8635a;
+}
+.buttonGenReports{
+    background-color: rgba(239, 245, 80, 0.8);
+    margin-bottom: 6px;
+}
+.buttonGenReports:hover{
+    background-color: rgba(206, 210, 69, 0.8);
+}
+.buttonGenMes{
+    background-color: #e8635a;
+}
+.buttonGenMes:hover{
+    background-color: #fb877e;
+}
 
 .cardResultGen{
     width: 18rem; 
     padding: 10px; 
     margin-left: 10px; 
     margin-right: 10px;
+    background-color: rgba(207, 207, 207, 0.4);
+}
+.cardResultGen>div{
+    background-color: rgba(207, 207, 207, 0.8);
+    padding: 2px;
 }
 
 .mainCardTitle{
@@ -179,4 +181,19 @@ body{
     top: 20px; 
     margin-top: 20; 
     margin-bottom: 80px;
+}
+.mainCardTitleReport{
+    position:relative; 
+    top: 20px; 
+    margin-top: 20; 
+    margin-bottom: 40px;
+}
+.tableTitle{
+    color: azure;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    text-decoration: double;
+}
+.tableReport1{
+    background-color: rgba(245,245,220,0.8);
 }
