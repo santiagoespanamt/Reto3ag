@@ -17,7 +17,7 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-
+<!--
  	<dependency>
  		<groupId>org.springframework.boot</groupId>
  		<artifactId>spring-boot-starter-oauth2-client</artifactId>
@@ -44,7 +44,7 @@
  		<artifactId>jquery</artifactId>
  		<version>3.6.1</version>
  	</dependency>
-
+-->
 
  	<dependency>
  		<groupId>org.apache.maven.plugins</groupId>
